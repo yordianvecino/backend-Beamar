@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { type } = require("express/lib/response");
-const { registroContactos, consultaContactos, consultaContactosId, actualizaContactos, eliminaContactos, idExiste } = require("../controllers/usuariosController");
+const { registroContactos, consultaContactos, consultaContactosId, actualizaContactos, actualizaTareas, actualizaComentarios, eliminaContactos, idExiste } = require("../controllers/usuariosController");
 
 
 // CODIGO DE API PARA CREAR UN NUEVO REGISTRO
@@ -192,8 +192,135 @@ router.put('/actualizar-contactos', async(req, res) =>{
             code: -1
         })
     }
-})
+});
 
+// CODIGO DE API PARA ACTUALIZAR UN REGISTRO
+router.put('/actualizar-tarea', async(req, res) =>{
+    try {
+        const { tarea, crm, vence, responsable, id } = req.body;
+        const campos = [
+            {
+                nombres: "tarea",
+                valor: tarea
+            },
+            {
+                nombres: "crm",
+                valor: crm
+            },
+            {
+                nombres: "vence",
+                valor: vence
+            },
+            {
+                nombres: "responsable",
+                valor: responsable
+            },
+            {
+                nombres: "id",
+                valor: id
+            }
+        ];
+
+        const campoVacio = await campos.find( item => !item.valor )
+
+        if (campoVacio) {
+            return res.status(400).json({
+                msg: `Debe ingresar el campo: ${campoVacio.titulo}` 
+            })
+        }
+
+        const existe = await idExiste(id)
+
+        console.log(`Respuesta de id ${existe}`)
+
+        if( !existe ){
+            return res.status(400).json({
+                msg: 'El Contacto ingresado no existe',
+                code: -1
+            })
+        }
+
+        const actualizado = await actualizaTareas(tarea, crm, vence, responsable, id)
+        console.log(`Respuesta de actualizacion de Tarea ${actualizado}`)
+
+        if (actualizado) {
+            
+            res.status(200).json({
+                msg: 'Se actualizo el Tarea correctamente',
+                code: 1,
+            })
+        } else {
+            res.status(400).json({
+                msg: 'No se actualizo el Tarea',
+                code: -1
+            })
+        }
+
+    } catch (error) {
+        res.status(400).json({
+            msg: `Ocurrio un error al actualizar la Tarea ${error}`,
+            code: -1
+        })
+    }
+});
+
+// CODIGO DE API PARA ACTUALIZAR UN REGISTRO
+router.put('/actualizar-comentarios', async(req, res) =>{
+    try {
+        const { comentarios, id } = req.body;
+        const campos = [
+            {
+                nombres: "comentarios",
+                valor: comentarios
+            },
+            {
+                nombres: "id",
+                valor: id
+            }
+        ];
+
+        const campoVacio = await campos.find( item => !item.valor )
+
+        if (campoVacio) {
+            return res.status(400).json({
+                msg: `Debe ingresar el campo: ${campoVacio.titulo}` 
+            })
+        }
+
+        const existe = await idExiste(id)
+
+        console.log(`Respuesta de id ${existe}`)
+
+        if( !existe ){
+            return res.status(400).json({
+                msg: 'El Contacto ingresado no existe',
+                code: -1
+            })
+        }
+
+        const actualizado = await actualizaComentarios( comentarios, id)
+        console.log(`Respuesta de actualizacion de Comentario ${actualizado}`)
+
+        if (actualizado) {
+            
+            res.status(200).json({
+                msg: 'Se actualizo el Comentario correctamente',
+                code: 1,
+            })
+        } else {
+            res.status(400).json({
+                msg: 'No se actualizo el Comentario',
+                code: -1
+            })
+        }
+
+    } catch (error) {
+        res.status(400).json({
+            msg: `Ocurrio un error al actualizar la Comentario ${error}`,
+            code: -1
+        })
+    }
+});
 
 //CODIGO PARA ELIMINAR ContactoS POR ID 
 router.delete('/eliminar-contacto/:id', async(req, res) => {

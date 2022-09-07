@@ -73,6 +73,34 @@ const actualizaContactos = async (nombre, apellido, email, telefono, direccion, 
     }
 }
 
+//ACTUALIZAR LOS TAREAS DE LA TABLA POR ID
+const actualizaTareas = async (tarea, crm, vence, responsable, id) =>{
+    try {
+         
+        let respuesta = pool.query('UPDATE contactos SET tarea = $1, crm = $2, vence = $3, responsable = $4 WHERE id = $5', [tarea, crm, vence, responsable, id])
+
+        console.log(`Se actualizo el registro del Tarea: ${respuesta}`)
+        return respuesta
+
+    } catch (error) {
+        throw new Error(`No se actualizo el registro del Tarea : ${error}`)
+    }
+}
+
+//ACTUALIZAR LOS TAREAS DE LA TABLA POR ID
+const actualizaComentarios = async (comentarios, id) =>{
+    try {
+         
+        let respuesta = pool.query('UPDATE contactos SET comentarios = $1 WHERE id = $2', [comentarios, id])
+
+        console.log(`Se actualizo el registro del Comentario: ${respuesta}`)
+        return respuesta
+
+    } catch (error) {
+        throw new Error(`No se actualizo el registro del comentario : ${error}`)
+    }
+}
+
 
 //ELIMINAR REGISTROS DE LA TABLA POR ID
 const eliminaContactos = async(id) => {
@@ -99,4 +127,4 @@ const idExiste = async (id) => {
     }
 }
 
-module.exports = { registroContactos, consultaContactos, consultaContactosId, actualizaContactos, eliminaContactos, idExiste };
+module.exports = { registroContactos, consultaContactos, consultaContactosId, actualizaContactos, actualizaTareas, actualizaComentarios, eliminaContactos, idExiste };
