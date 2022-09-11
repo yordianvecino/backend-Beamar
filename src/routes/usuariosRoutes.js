@@ -73,7 +73,7 @@ router.post(`/crear-contactos`, async(req, res) => {
 
 
 // CODIGO DE API PARA LISTAR TODOS LOS REGISTROS DE LA TABLA ContactoS
-router.post('/contactos', async(req, res) => {
+router.get('/contactos', async(req, res) => {
     try {
         const contactos = await consultaContactos(req);
 
