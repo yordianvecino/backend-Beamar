@@ -75,11 +75,11 @@ router.post(`/crear-contactos`, async(req, res) => {
 // CODIGO DE API PARA LISTAR TODOS LOS REGISTROS DE LA TABLA ContactoS
 router.get('/contactos', async(req, res) => {
     try {
-        const contactos = await consultaContactos(req);
+        const data = await consultaContactos(req);
 
         res.status(200).json({
             message: "Se realizo la consulta correctamente",
-            contactos
+            data
         })
     } catch (error) {
         console.log(error);
@@ -113,9 +113,11 @@ router.get('/consulta-Contactos-id/:id', async(req, res) =>{
 
 
 // CODIGO DE API PARA ACTUALIZAR UN REGISTRO
-router.put('/actualizar-contactos', async(req, res) =>{
+router.put('/actualizar-contactos/:id', async(req, res) =>{
     try {
-        const { nombre, apellido, email, telefono, direccion, tipo, origen, id } = req.body;
+        const id = req.params.id;
+
+        const { nombre, apellido, email, telefono, direccion, tipo, origen } = req.body;
         const campos = [
             {
                 nombres: "nombre",
@@ -170,7 +172,7 @@ router.put('/actualizar-contactos', async(req, res) =>{
             })
         }
 
-        const actualizado = await actualizaContactos(nombre, apellido, email, telefono, direccion, tipo, origen, id)
+        const actualizado = await actualizaContactos(nombre, apellido, email, telefono, direccion, tipo, origen, id )
         console.log(`Respuesta de actualizacion de Contacto ${actualizado}`)
 
         if (actualizado) {
@@ -188,7 +190,7 @@ router.put('/actualizar-contactos', async(req, res) =>{
 
     } catch (error) {
         res.status(400).json({
-            msg: `Ocurrio un error al actualizar la pelicula ${error}`,
+            msg: `Ocurrio un error al actualizar la contacto ${error}`,
             code: -1
         })
     }
