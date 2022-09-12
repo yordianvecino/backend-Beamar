@@ -78,13 +78,13 @@ router.get('/contactos', async(req, res) => {
         const data = await consultaContactos(req);
 
         res.status(200).json({
-            message: "Se realizo la consulta correctamente",
+            message: "Se realizo la consulta correctamente.",
             data
         })
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: "Ocurrio un error al realizar la consulta",
+            message: "Ocurrio un error al realizar la consulta.",
             code: -1
         })
     }
