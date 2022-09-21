@@ -69,7 +69,7 @@ const actualizaContactos = async (nombre, apellido, email, telefono, direccion, 
         return respuesta
 
     } catch (error) {
-        throw new Error(`No se actualizo el registro del Contactos : ${error}`)
+        throw new Error(`No se actualizo el registro del Contactos: ${error}`)
     }
 }
 
@@ -83,7 +83,7 @@ const actualizaTareas = async (tarea, crm, vence, responsable, id) =>{
         return respuesta
 
     } catch (error) {
-        throw new Error(`No se actualizo el registro del Tarea : ${error}`)
+        throw new Error(`No se actualizo el registro del Tarea: ${error}`)
     }
 }
 
@@ -97,7 +97,7 @@ const actualizaComentarios = async (comentarios, id) =>{
         return respuesta
 
     } catch (error) {
-        throw new Error(`No se actualizo el registro del comentario : ${error}`)
+        throw new Error(`No se actualizo el registro del comentario: ${error}`)
     }
 }
 
