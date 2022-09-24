@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { type } = require("express/lib/response");
-const { registroContactos, consultaContactos, consultaContactosId, actualizaContactos, actualizaTareas, actualizaComentarios, eliminaContactos, idExiste } = require("../controllers/usuariosController");
+const { registroContactos, consultaContactos, consultaContactosId, actualizaContactos, actualizaTareas, actualizaComentarios, eliminaContactos, idExiste } = require("../controllers/contactosController");
 
 
 // CODIGO DE API PARA CREAR UN NUEVO REGISTRO
